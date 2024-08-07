@@ -25,7 +25,7 @@
   (end of string message), and then the function exits
 */
 
-static void	client_handler(int sig)
+void	client_handler(int sig)
 {
 	if (sig == SIGUSR1)
 		ft_putstr_fd("",
@@ -45,17 +45,17 @@ static void	client_handler(int sig)
   Note: in the particular case of a null string, it will be sent
   zero as length and then the null terminator string
 */
-static void	client_send_message(int server_pid, char *str)
+void	client_send_message(int server_pid, char *str)
 {
 	int	i;
 
 	i = 0;
 	{
-		ft_putstr_fd("\e[92mTamanho da Mensagem = [", STDOUT_FILENO);
+		ft_putstr_fd("\e[36mTamanho da Mensagem = [", STDOUT_FILENO);
 		ft_putnbr_fd(ft_strlen(str), STDOUT_FILENO);
 		ft_putstr_fd("]\n\e[0m", STDOUT_FILENO);
 		send_int(server_pid, ft_strlen(str));
-		ft_putstr_fd("\e[92mEnviando mensagem\n\e[0m", STDOUT_FILENO);
+		ft_putstr_fd("\e[36mEnviando mensagem\n\e[0m", STDOUT_FILENO);
 		while (str[i] != '\0')
 			send_char(server_pid, str[i++]);
 		ft_putstr_fd("\e[92mMensagem enviada\n\e[0m", STDOUT_FILENO);
