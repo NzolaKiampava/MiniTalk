@@ -57,7 +57,7 @@ static void	client_send_message(int server_pid, char *str)
 		ft_putstr_fd("\e[92mEnviando mensagem\n\e[0m", STDOUT_FILENO);
 		while (str[i] != '\0')
 			send_char(server_pid, str[i++]);
-		ft_putstr_fd("\e[92mEnviando terminador de string nulo\n\e[0m", STDOUT_FILENO);
+		ft_putstr_fd("\e[92mEnviando terminador nulo\n\e[0m", STDOUT_FILENO);
 		send_char(server_pid, '\0');
 	}
 }
@@ -80,7 +80,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 	{
-		ft_putstr_fd("\e[31m## error - Sintaxe Incorreto ##\n\e[0m", STDOUT_FILENO);
+		ft_putstr_fd("\e[31m## error - Sintaxe Errado ##\n\e[0m", STDOUT_FILENO);
 		ft_putstr_fd(
 			"\e[92m./client <PID> <mensagem>\n\e[0m",
 			STDOUT_FILENO);

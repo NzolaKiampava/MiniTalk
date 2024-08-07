@@ -81,7 +81,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 	{
-		ft_putstr_fd("\e[31m## error - Sintaxe Incorreto ##\n\e[0m", STDOUT_FILENO);
+		ft_putstr_fd("\e[31m## error - Sintaxe Errado ##\n\e[0m", STDOUT_FILENO);
 		ft_putstr_fd(
 			"\e[92m./client <PID> <mensagem>\n\e[0m",
 			STDOUT_FILENO);
