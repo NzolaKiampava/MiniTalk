@@ -38,6 +38,7 @@ SRC_CLIENT := client.c minitalk.c
 SRC_SERVER_BONUS := server_bonus.c minitalk_bonus.c
 SRC_CLIENT_BONUS := client_bonus.c minitalk_bonus.c
 
+INCLUDE := -I. -Ilibft
 
 LIBFT := ./libft/libft.a
 LIBFT_PATH := ./libft
