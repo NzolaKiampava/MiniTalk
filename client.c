@@ -13,16 +13,17 @@
 #include "minitalk.h"
 
 /*
-  Function handles the SIGUSR1/SIGUSR2 signals received from server
+  Funcao manipula sinais SIGUSR1/SIGUSR2 recebido apartir do servidor
   
-  To be noted that the server will only send a signal upon receiving a 
-  signal from server, as explained below:
-  - Client sends a bit to server, and (normally) waits a reply - using pause()
-  and then
-  - The server sends a signal to confirm that each bit was received (ACK)
-  or
-  - The server sends a signal to confirm that the NULL terminator was received
-  (end of string message), and then the function exits
+  A ser observado que o server so envia um sinal apos receber 
+  um sinal do cliente, conforme explicado abaixo:
+  - Client envia um bit para o server e,(normalm.) aguarde uma resposta - 
+  usando pause()
+  - O server entao envia um sinal para confirmar que cada bit foi 
+  recebida (ACK)
+  ou
+  - O servidor envia um sinal para confirmar q o terminador NULL foi recebido
+  (fim da mensafem de string), e em seguida a funcao é encerrada
 */
 
 void	client_handler(int sig)
@@ -39,41 +40,42 @@ void	client_handler(int sig)
 }
 
 /*
-  Function sends the length of the string to server, and then sends the
-  string itself, including the null terminator
-  
-  Note: in the particular case of a null string, it will be sent
-  zero as length and then the null terminator string
+  Funcao envia o comprimento da string para o server, e em seguida, envia
+  a propria string, incluindo o terminador nulo
+
+  Nota: no caso especifico de uma string nula, sera enviada zero como
+  comprimento e, em seguida, uma string com o terminador nulo
 */
 void	client_send_message(int server_pid, char *str)
 {
 	int	i;
 
 	i = 0;
-	{
-		ft_putstr_fd("\e[36mTamanho da Mensagem = [", STDOUT_FILENO);
-		ft_putnbr_fd(ft_strlen(str), STDOUT_FILENO);
-		ft_putstr_fd("]\n\e[0m", STDOUT_FILENO);
-		send_int(server_pid, ft_strlen(str));
-		ft_putstr_fd("\e[36mEnviando mensagem\n\e[0m", STDOUT_FILENO);
-		while (str[i] != '\0')
-			send_char(server_pid, str[i++]);
-		ft_putstr_fd("\e[92mMensagem enviada\n\e[0m", STDOUT_FILENO);
-		send_char(server_pid, '\0');
-	}
+	ft_putstr_fd("\e[36mTamanho da Mensagem = [", STDOUT_FILENO);
+	ft_putnbr_fd(ft_strlen(str), STDOUT_FILENO);
+	ft_putstr_fd("]\n\e[0m", STDOUT_FILENO);
+	send_int(server_pid, ft_strlen(str));
+	ft_putstr_fd("\e[36mEnviando mensagem\n\e[0m", STDOUT_FILENO);
+	while (str[i] != '\0')
+		send_char(server_pid, str[i++]);
+	ft_putstr_fd("\e[92mMensagem enviada\n\e[0m", STDOUT_FILENO);
+	send_char(server_pid, '\0');
 }
 
 /*
-  This program (client) sends a string message to another process (server)
+  Neste prog. (client) envia uma string message para outro processo(server)
 
-  The arguments passed from command line are checked if valid
-  - string and PID server arguments must be passed, and not more or less
-  - PID server must be valid, kill() and ft_atoi() are used to check this
-  (not only it must be a valid number as it must be an existing process)
-
-  The sigaction structure is used to catch the user defined signals and 
-  take care of the communication with server. Basically for each signal
-  sent from client, a reply signal is expected to be received from server
+  Os argumentos passados pela linha de comando sao verificados para garantir
+  se sao validos:
+  - Devem ser passados os argumentos da string e do PID do servidor, e nao 
+  mais ou menos que isso.
+  - PID do server deve ser valido, kill() e ft_atoi() sao usados para
+  verifica-lo (nao apenas deve ser um numero valido, como tambem deve 
+  ser um processo existente)
+  
+  A estrutura sigaction é usada para capturar os sinais definidos pelo user
+  e cuidar da comunicacao com o server. Basicamente, para cada sinal enviado
+  pelo client, espera-se que um sinal de resposta seja reebido do servidor
 */
 int	main(int argc, char **argv)
 {	

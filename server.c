@@ -13,11 +13,11 @@
 #include "minitalk.h"
 
 /*
-  Function checks if the string message is finished.
-  In case the null terminator string is received, prints the whole string
-  and frees from heap memory the string, and informs client that message was
-  received (client will then exit), with send_bit() without signal expecting 
-  to be received back from client
+  A funcao verifica se a mensagem em string esta completa.
+  Caso o terminador nulo da string seja recebida, imprime a string inteira
+  e libera a memoria alocada na heap para string. Em seguida, informa ao 
+  cliente que a mensagem foi recebida (o cliente entao saira), usando
+  send_bit() sem esperar um sinal de confirmacao do cliente.
 */
 void	server_is_message_finished(
 	t_protocol *t_server, int *i, pid_t client_pid)
@@ -42,9 +42,9 @@ void	server_is_message_finished(
 }
 
 /*
-  Function checks if the string length bits are done
-  If yes, the length is printed to stdout and used to allocated in the 
-  heap memory a string with the exact size received (plus the null terminator)
+  Funcao verifica se todos os bits do comprimento da string foram processados,
+  Se sim, o comprimento é impresso no stdout e é usado para alocar na memoria
+  heap umas string com o tamanho exato recebido (mais o terminador nulo)
 */
 void	server_is_str_length_finished(t_protocol *t_server)
 {
@@ -66,12 +66,12 @@ void	server_is_str_length_finished(t_protocol *t_server)
 }
 
 /*
-  Function catches SIGUSR1 and SIGUSR2 signals received from client that
-  represents the status of each bit (either 0 or 1)
-  Variables declared as static are initialized with zero, and after each 
-  8 bits received they are again re-initialized to zero
-  For each bit received from client, the server sends an ACK signal
-  (then the client should only send the next bit after this ACK signal)
+  Funcao captura os sinais SIGUSR1 e SIGUSR2 recebidos do cliente, que
+  representam o status de cada bit (0 / 1).
+  As variaveis declaradas como static sao inicializadas com zero e, apos
+  cada 8 bits recebidos, sao novamente re-inicializadas para zero.
+  Para cada bit recebido do cliente, o servidor envia um sinal de ACK
+  (o cliente deve enviar o proximo bit somente apos receber esse sinal de ACK)
 */
 void	server_handler(int num, siginfo_t *info, void *context)
 {

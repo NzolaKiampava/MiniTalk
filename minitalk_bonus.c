@@ -13,9 +13,10 @@
 #include "minitalk_bonus.h"
 
 /*
-  Function sets the signals to be caught by the custom handler.
-  In case this action fails, prints to stdout an error message and exits the
-  program
+  Funcao define os sinais para serem capturados pelo manipulador 
+  personalizado.
+  Caso essa acao falhe, imprime uma mensagem de erro no stdout e encerra
+  o programa
 */
 void	configure_sigaction_signals(struct sigaction *sa)
 {
@@ -34,10 +35,10 @@ void	configure_sigaction_signals(struct sigaction *sa)
 }
 
 /*
-  Functions sends an integer containing the length of the message
-  For each bit sent client, waits a signal received back before proceeding
-  by using flag = 1 on the send_bit()
-  Assumed 1 byte = 8 bits
+  Funcao envia um inteiro contendo o comprimento da mensagem.
+  Para cada bit enviado pelo cliente, espera-se um sinal de retorno
+  antes de continuar, usando flag = 1 na funcao send_bit().
+  Considera-se que 1 byte = 8 bits.
 */
 void	send_int(pid_t pid, int num)
 {
@@ -54,9 +55,9 @@ void	send_int(pid_t pid, int num)
 }
 
 /*
-  Function sends 1 char, that normally is an octet (8 bits)
-  For each bit sent client, waits a signal received back before proceeding
-  by using flag = 1 on the send_bit()
+  Funcao envia 1 char, que normalmente e um octeto (8 bits)
+  Para cada bit enviado pelo cliente, espera-se um sinal de retorno antes
+  de continuar, usando flag = 1 na funcao send_bit()
   Assumed 1 byte = 8 bits
 */
 void	send_char(pid_t pid, char c)
@@ -74,9 +75,10 @@ void	send_char(pid_t pid, char c)
 }
 
 /*
-  Function sends a bit (0 or 1) to the process PID
-  Return from function will happen after ACK signal is received in case
-  the wait flag is set to non zero, otherwise return immediately
+  Funcao envia um bit (0 / 1) para p processo com o PID especifico.
+  O retorno da funcao ocorre apos o sinal de ACK ser recebido caso a flag
+  de espera esteja definida como um valor diferente de zero,
+  caso contrario, a funcao retornara imediatamente.
 */
 void	send_bit(pid_t pid, char bit, char flag_to_pause)
 {
